@@ -60,11 +60,11 @@ public class ConfigDecripcionLogin implements Serializable {
     @Lob
     @Column(name = "ruta_firma")
     private String rutaFirma;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
-    private List<AccessConfigUser> accessConfigUserList;
     @JoinColumn(name = "id_login", referencedColumnName = "id")
     @ManyToOne
     private ConfigLogin idLogin;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDescripcionLogin")
+    private List<CmProfesionales> cmProfesionalesList;
 
     public ConfigDecripcionLogin() {
     }
@@ -161,20 +161,20 @@ public class ConfigDecripcionLogin implements Serializable {
         this.rutaFirma = rutaFirma;
     }
 
-    public List<AccessConfigUser> getAccessConfigUserList() {
-        return accessConfigUserList;
-    }
-
-    public void setAccessConfigUserList(List<AccessConfigUser> accessConfigUserList) {
-        this.accessConfigUserList = accessConfigUserList;
-    }
-
     public ConfigLogin getIdLogin() {
         return idLogin;
     }
 
     public void setIdLogin(ConfigLogin idLogin) {
         this.idLogin = idLogin;
+    }
+
+    public List<CmProfesionales> getCmProfesionalesList() {
+        return cmProfesionalesList;
+    }
+
+    public void setCmProfesionalesList(List<CmProfesionales> cmProfesionalesList) {
+        this.cmProfesionalesList = cmProfesionalesList;
     }
 
     @Override
