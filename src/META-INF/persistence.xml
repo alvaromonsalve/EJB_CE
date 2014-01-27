@@ -8,5 +8,18 @@
     <class>entidades.AccessRoles</class>
     <class>entidades.ConfigDecripcionLogin</class>
     <class>entidades.AccessEspeciales</class>
+    <class>entidades.PypAdmControlProfesionales</class>
+    <class>entidades.CmProfesionales</class>
+    <class>entidades.PypAdmAgend</class>
+    <class>entidades.InfoEntidades</class>
+    <class>entidades.PypAdmProgramas</class>
+    <class>entidades.InfoPaciente</class>
+    <class>entidades.PypAdmAsistCon</class>
   </persistence-unit>
+  <properties>
+    <property name="javax.persistence.jdbc.url" value="jdbc:mysql://192.168.1.102:3306/database?zeroDateTimeBehavior=convertToNull"/>
+    <property name="javax.persistence.jdbc.password" value="9RLH5QEwQ4dF"/>
+    <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+    <property name="javax.persistence.jdbc.user" value="root"/>
+  </properties>
 </persistence>
