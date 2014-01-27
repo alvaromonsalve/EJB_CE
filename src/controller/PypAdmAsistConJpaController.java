@@ -7,6 +7,7 @@
 package controller;
 
 import controller.exceptions.NonexistentEntityException;
+import entity.CmProfesionales;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
@@ -190,6 +191,30 @@ public class PypAdmAsistConJpaController implements Serializable {
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();
+        } finally {
+            em.close();
+        }
+    }
+    
+    //codigo no Auto-Generado
+    public List<PypAdmAsistCon> listPypAdmAsistCon(int cp){
+        EntityManager em = getEntityManager();
+        try {
+            return em.createQuery("SELECT p FROM PypAdmAsistCon p WHERE p.estado = '1' AND p.idControlPro.idProfesional.id = :cp" )
+                    .setParameter("cp", cp)
+                    .setHint("javax.persistence.cache.storeMode", "REFRESH")
+                    .getResultList();
+        } finally {
+            em.close();
+        }
+    }
+    
+    public List<PypAdmAsistCon> listPypAdmAsistCon(){
+        EntityManager em = getEntityManager();
+        try {
+            return em.createQuery("SELECT p FROM PypAdmAsistCon p WHERE p.estado = '1'" )
+                    .setHint("javax.persistence.cache.storeMode", "REFRESH")
+                    .getResultList();
         } finally {
             em.close();
         }
