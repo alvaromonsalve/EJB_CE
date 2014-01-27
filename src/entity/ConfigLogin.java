@@ -4,20 +4,19 @@
  * and open the template in the editor.
  */
 
-package entidades;
+package entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -25,41 +24,30 @@ import javax.persistence.Table;
  * @author Alvaro Monsalve
  */
 @Entity
-@Table(name = "access_especiales")
+@Table(name = "config_login")
 @NamedQueries({
-    @NamedQuery(name = "AccessEspeciales.findAll", query = "SELECT a FROM AccessEspeciales a")})
-public class AccessEspeciales implements Serializable {
+    @NamedQuery(name = "ConfigLogin.findAll", query = "SELECT c FROM ConfigLogin c")})
+public class ConfigLogin implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @Lob
-    @Column(name = "ruta")
-    private String ruta;
-    @Basic(optional = false)
-    @Lob
-    @Column(name = "acceso")
-    private String acceso;
+    @Column(name = "loGin")
+    private String loGin;
+    @Column(name = "pasSword")
+    private String pasSword;
     @Column(name = "estado")
-    private Integer estado;
-    @JoinColumn(name = "id_config_usuario", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private AccessConfigUser idConfigUsuario;
+    private Boolean estado;
+    @OneToMany(mappedBy = "idLogin")
+    private List<ConfigDecripcionLogin> configDecripcionLoginList;
 
-    public AccessEspeciales() {
+    public ConfigLogin() {
     }
 
-    public AccessEspeciales(Integer id) {
+    public ConfigLogin(Integer id) {
         this.id = id;
-    }
-
-    public AccessEspeciales(Integer id, String ruta, String acceso) {
-        this.id = id;
-        this.ruta = ruta;
-        this.acceso = acceso;
     }
 
     public Integer getId() {
@@ -70,36 +58,36 @@ public class AccessEspeciales implements Serializable {
         this.id = id;
     }
 
-    public String getRuta() {
-        return ruta;
+    public String getLoGin() {
+        return loGin;
     }
 
-    public void setRuta(String ruta) {
-        this.ruta = ruta;
+    public void setLoGin(String loGin) {
+        this.loGin = loGin;
     }
 
-    public String getAcceso() {
-        return acceso;
+    public String getPasSword() {
+        return pasSword;
     }
 
-    public void setAcceso(String acceso) {
-        this.acceso = acceso;
+    public void setPasSword(String pasSword) {
+        this.pasSword = pasSword;
     }
 
-    public Integer getEstado() {
+    public Boolean getEstado() {
         return estado;
     }
 
-    public void setEstado(Integer estado) {
+    public void setEstado(Boolean estado) {
         this.estado = estado;
     }
 
-    public AccessConfigUser getIdConfigUsuario() {
-        return idConfigUsuario;
+    public List<ConfigDecripcionLogin> getConfigDecripcionLoginList() {
+        return configDecripcionLoginList;
     }
 
-    public void setIdConfigUsuario(AccessConfigUser idConfigUsuario) {
-        this.idConfigUsuario = idConfigUsuario;
+    public void setConfigDecripcionLoginList(List<ConfigDecripcionLogin> configDecripcionLoginList) {
+        this.configDecripcionLoginList = configDecripcionLoginList;
     }
 
     @Override
@@ -112,10 +100,10 @@ public class AccessEspeciales implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof AccessEspeciales)) {
+        if (!(object instanceof ConfigLogin)) {
             return false;
         }
-        AccessEspeciales other = (AccessEspeciales) object;
+        ConfigLogin other = (ConfigLogin) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -124,7 +112,7 @@ public class AccessEspeciales implements Serializable {
 
     @Override
     public String toString() {
-        return "entidades.AccessEspeciales[ id=" + id + " ]";
+        return "entidades.ConfigLogin[ id=" + id + " ]";
     }
 
 }

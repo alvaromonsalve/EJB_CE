@@ -4,21 +4,20 @@
  * and open the template in the editor.
  */
 
-package entidades;
+package entity;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -26,10 +25,10 @@ import javax.persistence.Table;
  * @author Alvaro Monsalve
  */
 @Entity
-@Table(name = "access_perfiles")
+@Table(name = "access_especiales")
 @NamedQueries({
-    @NamedQuery(name = "AccessPerfiles.findAll", query = "SELECT a FROM AccessPerfiles a")})
-public class AccessPerfiles implements Serializable {
+    @NamedQuery(name = "AccessEspeciales.findAll", query = "SELECT a FROM AccessEspeciales a")})
+public class AccessEspeciales implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,30 +37,29 @@ public class AccessPerfiles implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @Lob
-    @Column(name = "nombre")
-    private String nombre;
+    @Column(name = "ruta")
+    private String ruta;
     @Basic(optional = false)
     @Lob
-    @Column(name = "descripcion")
-    private String descripcion;
+    @Column(name = "acceso")
+    private String acceso;
     @Column(name = "estado")
     private Integer estado;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPerfiles")
-    private List<AccessConfigUser> accessConfigUserList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPerfil")
-    private List<AccessRoles> accessRolesList;
+    @JoinColumn(name = "id_config_usuario", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private AccessConfigUser idConfigUsuario;
 
-    public AccessPerfiles() {
+    public AccessEspeciales() {
     }
 
-    public AccessPerfiles(Integer id) {
+    public AccessEspeciales(Integer id) {
         this.id = id;
     }
 
-    public AccessPerfiles(Integer id, String nombre, String descripcion) {
+    public AccessEspeciales(Integer id, String ruta, String acceso) {
         this.id = id;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
+        this.ruta = ruta;
+        this.acceso = acceso;
     }
 
     public Integer getId() {
@@ -72,20 +70,20 @@ public class AccessPerfiles implements Serializable {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getRuta() {
+        return ruta;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setRuta(String ruta) {
+        this.ruta = ruta;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getAcceso() {
+        return acceso;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setAcceso(String acceso) {
+        this.acceso = acceso;
     }
 
     public Integer getEstado() {
@@ -96,20 +94,12 @@ public class AccessPerfiles implements Serializable {
         this.estado = estado;
     }
 
-    public List<AccessConfigUser> getAccessConfigUserList() {
-        return accessConfigUserList;
+    public AccessConfigUser getIdConfigUsuario() {
+        return idConfigUsuario;
     }
 
-    public void setAccessConfigUserList(List<AccessConfigUser> accessConfigUserList) {
-        this.accessConfigUserList = accessConfigUserList;
-    }
-
-    public List<AccessRoles> getAccessRolesList() {
-        return accessRolesList;
-    }
-
-    public void setAccessRolesList(List<AccessRoles> accessRolesList) {
-        this.accessRolesList = accessRolesList;
+    public void setIdConfigUsuario(AccessConfigUser idConfigUsuario) {
+        this.idConfigUsuario = idConfigUsuario;
     }
 
     @Override
@@ -122,10 +112,10 @@ public class AccessPerfiles implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof AccessPerfiles)) {
+        if (!(object instanceof AccessEspeciales)) {
             return false;
         }
-        AccessPerfiles other = (AccessPerfiles) object;
+        AccessEspeciales other = (AccessEspeciales) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -134,7 +124,7 @@ public class AccessPerfiles implements Serializable {
 
     @Override
     public String toString() {
-        return "entidades.AccessPerfiles[ id=" + id + " ]";
+        return "entidades.AccessEspeciales[ id=" + id + " ]";
     }
 
 }

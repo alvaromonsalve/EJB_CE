@@ -4,11 +4,12 @@
  * and open the template in the editor.
  */
 
-package entidades;
+package entity;
 
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,29 +25,27 @@ import javax.persistence.Table;
  * @author Alvaro Monsalve
  */
 @Entity
-@Table(name = "config_login")
+@Table(name = "pyp_adm_programas")
 @NamedQueries({
-    @NamedQuery(name = "ConfigLogin.findAll", query = "SELECT c FROM ConfigLogin c")})
-public class ConfigLogin implements Serializable {
+    @NamedQuery(name = "PypAdmProgramas.findAll", query = "SELECT p FROM PypAdmProgramas p")})
+public class PypAdmProgramas implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "loGin")
-    private String loGin;
-    @Column(name = "pasSword")
-    private String pasSword;
+    @Column(name = "nombre")
+    private String nombre;
     @Column(name = "estado")
-    private Boolean estado;
-    @OneToMany(mappedBy = "idLogin")
-    private List<ConfigDecripcionLogin> configDecripcionLoginList;
+    private Character estado;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPrograma")
+    private List<PypAdmAgend> pypAdmAgendList;
 
-    public ConfigLogin() {
+    public PypAdmProgramas() {
     }
 
-    public ConfigLogin(Integer id) {
+    public PypAdmProgramas(Integer id) {
         this.id = id;
     }
 
@@ -58,36 +57,28 @@ public class ConfigLogin implements Serializable {
         this.id = id;
     }
 
-    public String getLoGin() {
-        return loGin;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setLoGin(String loGin) {
-        this.loGin = loGin;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public String getPasSword() {
-        return pasSword;
-    }
-
-    public void setPasSword(String pasSword) {
-        this.pasSword = pasSword;
-    }
-
-    public Boolean getEstado() {
+    public Character getEstado() {
         return estado;
     }
 
-    public void setEstado(Boolean estado) {
+    public void setEstado(Character estado) {
         this.estado = estado;
     }
 
-    public List<ConfigDecripcionLogin> getConfigDecripcionLoginList() {
-        return configDecripcionLoginList;
+    public List<PypAdmAgend> getPypAdmAgendList() {
+        return pypAdmAgendList;
     }
 
-    public void setConfigDecripcionLoginList(List<ConfigDecripcionLogin> configDecripcionLoginList) {
-        this.configDecripcionLoginList = configDecripcionLoginList;
+    public void setPypAdmAgendList(List<PypAdmAgend> pypAdmAgendList) {
+        this.pypAdmAgendList = pypAdmAgendList;
     }
 
     @Override
@@ -100,10 +91,10 @@ public class ConfigLogin implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ConfigLogin)) {
+        if (!(object instanceof PypAdmProgramas)) {
             return false;
         }
-        ConfigLogin other = (ConfigLogin) object;
+        PypAdmProgramas other = (PypAdmProgramas) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -112,7 +103,7 @@ public class ConfigLogin implements Serializable {
 
     @Override
     public String toString() {
-        return "entidades.ConfigLogin[ id=" + id + " ]";
+        return "entidades.PypAdmProgramas[ id=" + id + " ]";
     }
 
 }

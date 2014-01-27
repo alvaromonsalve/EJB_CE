@@ -2,19 +2,19 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="EJB_CEPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <class>entidades.AccessConfigUser</class>
-    <class>entidades.AccessPerfiles</class>
-    <class>entidades.ConfigLogin</class>
-    <class>entidades.AccessRoles</class>
-    <class>entidades.ConfigDecripcionLogin</class>
-    <class>entidades.AccessEspeciales</class>
-    <class>entidades.PypAdmControlProfesionales</class>
-    <class>entidades.CmProfesionales</class>
-    <class>entidades.PypAdmAgend</class>
-    <class>entidades.InfoEntidades</class>
-    <class>entidades.PypAdmProgramas</class>
-    <class>entidades.InfoPaciente</class>
-    <class>entidades.PypAdmAsistCon</class>
+    <class>entity.PypAdmAsistCon</class>
+    <class>entity.PypAdmProgramas</class>
+    <class>entity.InfoEntidades</class>
+    <class>entity.PypAdmControlProfesionales</class>
+    <class>entity.AccessPerfiles</class>
+    <class>entity.ConfigDecripcionLogin</class>
+    <class>entity.PypAdmAgend</class>
+    <class>entity.InfoPaciente</class>
+    <class>entity.ConfigLogin</class>
+    <class>entity.AccessEspeciales</class>
+    <class>entity.CmProfesionales</class>
+    <class>entity.AccessRoles</class>
+    <class>entity.AccessConfigUser</class>
   </persistence-unit>
   <properties>
     <property name="javax.persistence.jdbc.url" value="jdbc:mysql://192.168.1.102:3306/database?zeroDateTimeBehavior=convertToNull"/>

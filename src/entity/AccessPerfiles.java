@@ -4,20 +4,21 @@
  * and open the template in the editor.
  */
 
-package entidades;
+package entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -25,10 +26,10 @@ import javax.persistence.Table;
  * @author Alvaro Monsalve
  */
 @Entity
-@Table(name = "access_roles")
+@Table(name = "access_perfiles")
 @NamedQueries({
-    @NamedQuery(name = "AccessRoles.findAll", query = "SELECT a FROM AccessRoles a")})
-public class AccessRoles implements Serializable {
+    @NamedQuery(name = "AccessPerfiles.findAll", query = "SELECT a FROM AccessPerfiles a")})
+public class AccessPerfiles implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,35 +37,31 @@ public class AccessRoles implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "ruta")
-    private int ruta;
+    @Lob
+    @Column(name = "nombre")
+    private String nombre;
     @Basic(optional = false)
     @Lob
     @Column(name = "descripcion")
     private String descripcion;
-    @Basic(optional = false)
-    @Column(name = "acceso")
-    private int acceso;
-    @Basic(optional = false)
     @Column(name = "estado")
-    private int estado;
-    @JoinColumn(name = "id_perfil", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private AccessPerfiles idPerfil;
+    private Integer estado;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPerfiles")
+    private List<AccessConfigUser> accessConfigUserList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPerfil")
+    private List<AccessRoles> accessRolesList;
 
-    public AccessRoles() {
+    public AccessPerfiles() {
     }
 
-    public AccessRoles(Integer id) {
+    public AccessPerfiles(Integer id) {
         this.id = id;
     }
 
-    public AccessRoles(Integer id, int ruta, String descripcion, int acceso, int estado) {
+    public AccessPerfiles(Integer id, String nombre, String descripcion) {
         this.id = id;
-        this.ruta = ruta;
+        this.nombre = nombre;
         this.descripcion = descripcion;
-        this.acceso = acceso;
-        this.estado = estado;
     }
 
     public Integer getId() {
@@ -75,12 +72,12 @@ public class AccessRoles implements Serializable {
         this.id = id;
     }
 
-    public int getRuta() {
-        return ruta;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setRuta(int ruta) {
-        this.ruta = ruta;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getDescripcion() {
@@ -91,28 +88,28 @@ public class AccessRoles implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public int getAcceso() {
-        return acceso;
-    }
-
-    public void setAcceso(int acceso) {
-        this.acceso = acceso;
-    }
-
-    public int getEstado() {
+    public Integer getEstado() {
         return estado;
     }
 
-    public void setEstado(int estado) {
+    public void setEstado(Integer estado) {
         this.estado = estado;
     }
 
-    public AccessPerfiles getIdPerfil() {
-        return idPerfil;
+    public List<AccessConfigUser> getAccessConfigUserList() {
+        return accessConfigUserList;
     }
 
-    public void setIdPerfil(AccessPerfiles idPerfil) {
-        this.idPerfil = idPerfil;
+    public void setAccessConfigUserList(List<AccessConfigUser> accessConfigUserList) {
+        this.accessConfigUserList = accessConfigUserList;
+    }
+
+    public List<AccessRoles> getAccessRolesList() {
+        return accessRolesList;
+    }
+
+    public void setAccessRolesList(List<AccessRoles> accessRolesList) {
+        this.accessRolesList = accessRolesList;
     }
 
     @Override
@@ -125,10 +122,10 @@ public class AccessRoles implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof AccessRoles)) {
+        if (!(object instanceof AccessPerfiles)) {
             return false;
         }
-        AccessRoles other = (AccessRoles) object;
+        AccessPerfiles other = (AccessPerfiles) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -137,7 +134,7 @@ public class AccessRoles implements Serializable {
 
     @Override
     public String toString() {
-        return "entidades.AccessRoles[ id=" + id + " ]";
+        return "entidades.AccessPerfiles[ id=" + id + " ]";
     }
 
 }

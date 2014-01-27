@@ -4,9 +4,10 @@
  * and open the template in the editor.
  */
 
-package entidades;
+package entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -21,38 +22,45 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
  * @author Alvaro Monsalve
  */
 @Entity
-@Table(name = "cm_profesionales")
+@Table(name = "pyp_adm_agend")
 @NamedQueries({
-    @NamedQuery(name = "CmProfesionales.findAll", query = "SELECT c FROM CmProfesionales c")})
-public class CmProfesionales implements Serializable {
+    @NamedQuery(name = "PypAdmAgend.findAll", query = "SELECT p FROM PypAdmAgend p")})
+public class PypAdmAgend implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "tarjeta_profesional")
-    private String tarjetaProfesional;
-    @Column(name = "t_vinculacion")
-    private Character tVinculacion;
+    @Column(name = "fecha")
+    @Temporal(TemporalType.DATE)
+    private Date fecha;
+    @Column(name = "hora")
+    @Temporal(TemporalType.TIME)
+    private Date hora;
     @Column(name = "estado")
     private Character estado;
-    @JoinColumn(name = "id_descripcion_login", referencedColumnName = "id")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idAgend")
+    private List<PypAdmAsistCon> pypAdmAsistConList;
+    @JoinColumn(name = "id_programa", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private ConfigDecripcionLogin idDescripcionLogin;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProfesional")
-    private List<PypAdmControlProfesionales> pypAdmControlProfesionalesList;
+    private PypAdmProgramas idPrograma;
+    @JoinColumn(name = "id_paciente", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private InfoPaciente idPaciente;
 
-    public CmProfesionales() {
+    public PypAdmAgend() {
     }
 
-    public CmProfesionales(Integer id) {
+    public PypAdmAgend(Integer id) {
         this.id = id;
     }
 
@@ -64,20 +72,20 @@ public class CmProfesionales implements Serializable {
         this.id = id;
     }
 
-    public String getTarjetaProfesional() {
-        return tarjetaProfesional;
+    public Date getFecha() {
+        return fecha;
     }
 
-    public void setTarjetaProfesional(String tarjetaProfesional) {
-        this.tarjetaProfesional = tarjetaProfesional;
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
-    public Character getTVinculacion() {
-        return tVinculacion;
+    public Date getHora() {
+        return hora;
     }
 
-    public void setTVinculacion(Character tVinculacion) {
-        this.tVinculacion = tVinculacion;
+    public void setHora(Date hora) {
+        this.hora = hora;
     }
 
     public Character getEstado() {
@@ -88,20 +96,28 @@ public class CmProfesionales implements Serializable {
         this.estado = estado;
     }
 
-    public ConfigDecripcionLogin getIdDescripcionLogin() {
-        return idDescripcionLogin;
+    public List<PypAdmAsistCon> getPypAdmAsistConList() {
+        return pypAdmAsistConList;
     }
 
-    public void setIdDescripcionLogin(ConfigDecripcionLogin idDescripcionLogin) {
-        this.idDescripcionLogin = idDescripcionLogin;
+    public void setPypAdmAsistConList(List<PypAdmAsistCon> pypAdmAsistConList) {
+        this.pypAdmAsistConList = pypAdmAsistConList;
     }
 
-    public List<PypAdmControlProfesionales> getPypAdmControlProfesionalesList() {
-        return pypAdmControlProfesionalesList;
+    public PypAdmProgramas getIdPrograma() {
+        return idPrograma;
     }
 
-    public void setPypAdmControlProfesionalesList(List<PypAdmControlProfesionales> pypAdmControlProfesionalesList) {
-        this.pypAdmControlProfesionalesList = pypAdmControlProfesionalesList;
+    public void setIdPrograma(PypAdmProgramas idPrograma) {
+        this.idPrograma = idPrograma;
+    }
+
+    public InfoPaciente getIdPaciente() {
+        return idPaciente;
+    }
+
+    public void setIdPaciente(InfoPaciente idPaciente) {
+        this.idPaciente = idPaciente;
     }
 
     @Override
@@ -114,10 +130,10 @@ public class CmProfesionales implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof CmProfesionales)) {
+        if (!(object instanceof PypAdmAgend)) {
             return false;
         }
-        CmProfesionales other = (CmProfesionales) object;
+        PypAdmAgend other = (PypAdmAgend) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -126,7 +142,7 @@ public class CmProfesionales implements Serializable {
 
     @Override
     public String toString() {
-        return "entidades.CmProfesionales[ id=" + id + " ]";
+        return "entidades.PypAdmAgend[ id=" + id + " ]";
     }
 
 }

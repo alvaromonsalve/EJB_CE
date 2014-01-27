@@ -4,13 +4,11 @@
  * and open the template in the editor.
  */
 
-package entidades;
+package entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,7 +18,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -30,34 +27,37 @@ import javax.persistence.TemporalType;
  * @author Alvaro Monsalve
  */
 @Entity
-@Table(name = "pyp_adm_control_profesionales")
+@Table(name = "pyp_adm_asist_con")
 @NamedQueries({
-    @NamedQuery(name = "PypAdmControlProfesionales.findAll", query = "SELECT p FROM PypAdmControlProfesionales p")})
-public class PypAdmControlProfesionales implements Serializable {
+    @NamedQuery(name = "PypAdmAsistCon.findAll", query = "SELECT p FROM PypAdmAsistCon p")})
+public class PypAdmAsistCon implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "fecha_inicio")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaInicio;
-    @Column(name = "fecha_fin")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaFin;
+    @Column(name = "primera_vez")
+    private Character primeraVez;
+    @Column(name = "fecha")
+    @Temporal(TemporalType.DATE)
+    private Date fecha;
+    @Column(name = "hora")
+    @Temporal(TemporalType.TIME)
+    private Date hora;
     @Column(name = "estado")
     private Character estado;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idControlPro")
-    private List<PypAdmAsistCon> pypAdmAsistConList;
-    @JoinColumn(name = "id_profesional", referencedColumnName = "id")
+    @JoinColumn(name = "id_control_pro", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private CmProfesionales idProfesional;
+    private PypAdmControlProfesionales idControlPro;
+    @JoinColumn(name = "id_agend", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private PypAdmAgend idAgend;
 
-    public PypAdmControlProfesionales() {
+    public PypAdmAsistCon() {
     }
 
-    public PypAdmControlProfesionales(Integer id) {
+    public PypAdmAsistCon(Integer id) {
         this.id = id;
     }
 
@@ -69,20 +69,28 @@ public class PypAdmControlProfesionales implements Serializable {
         this.id = id;
     }
 
-    public Date getFechaInicio() {
-        return fechaInicio;
+    public Character getPrimeraVez() {
+        return primeraVez;
     }
 
-    public void setFechaInicio(Date fechaInicio) {
-        this.fechaInicio = fechaInicio;
+    public void setPrimeraVez(Character primeraVez) {
+        this.primeraVez = primeraVez;
     }
 
-    public Date getFechaFin() {
-        return fechaFin;
+    public Date getFecha() {
+        return fecha;
     }
 
-    public void setFechaFin(Date fechaFin) {
-        this.fechaFin = fechaFin;
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public Date getHora() {
+        return hora;
+    }
+
+    public void setHora(Date hora) {
+        this.hora = hora;
     }
 
     public Character getEstado() {
@@ -93,20 +101,20 @@ public class PypAdmControlProfesionales implements Serializable {
         this.estado = estado;
     }
 
-    public List<PypAdmAsistCon> getPypAdmAsistConList() {
-        return pypAdmAsistConList;
+    public PypAdmControlProfesionales getIdControlPro() {
+        return idControlPro;
     }
 
-    public void setPypAdmAsistConList(List<PypAdmAsistCon> pypAdmAsistConList) {
-        this.pypAdmAsistConList = pypAdmAsistConList;
+    public void setIdControlPro(PypAdmControlProfesionales idControlPro) {
+        this.idControlPro = idControlPro;
     }
 
-    public CmProfesionales getIdProfesional() {
-        return idProfesional;
+    public PypAdmAgend getIdAgend() {
+        return idAgend;
     }
 
-    public void setIdProfesional(CmProfesionales idProfesional) {
-        this.idProfesional = idProfesional;
+    public void setIdAgend(PypAdmAgend idAgend) {
+        this.idAgend = idAgend;
     }
 
     @Override
@@ -119,10 +127,10 @@ public class PypAdmControlProfesionales implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof PypAdmControlProfesionales)) {
+        if (!(object instanceof PypAdmAsistCon)) {
             return false;
         }
-        PypAdmControlProfesionales other = (PypAdmControlProfesionales) object;
+        PypAdmAsistCon other = (PypAdmAsistCon) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -131,7 +139,7 @@ public class PypAdmControlProfesionales implements Serializable {
 
     @Override
     public String toString() {
-        return "entidades.PypAdmControlProfesionales[ id=" + id + " ]";
+        return "entidades.PypAdmAsistCon[ id=" + id + " ]";
     }
 
 }

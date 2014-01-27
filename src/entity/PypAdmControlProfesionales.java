@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package entidades;
+package entity;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -30,37 +30,34 @@ import javax.persistence.TemporalType;
  * @author Alvaro Monsalve
  */
 @Entity
-@Table(name = "pyp_adm_agend")
+@Table(name = "pyp_adm_control_profesionales")
 @NamedQueries({
-    @NamedQuery(name = "PypAdmAgend.findAll", query = "SELECT p FROM PypAdmAgend p")})
-public class PypAdmAgend implements Serializable {
+    @NamedQuery(name = "PypAdmControlProfesionales.findAll", query = "SELECT p FROM PypAdmControlProfesionales p")})
+public class PypAdmControlProfesionales implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "fecha")
-    @Temporal(TemporalType.DATE)
-    private Date fecha;
-    @Column(name = "hora")
-    @Temporal(TemporalType.TIME)
-    private Date hora;
+    @Column(name = "fecha_inicio")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaInicio;
+    @Column(name = "fecha_fin")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaFin;
     @Column(name = "estado")
     private Character estado;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idAgend")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idControlPro")
     private List<PypAdmAsistCon> pypAdmAsistConList;
-    @JoinColumn(name = "id_programa", referencedColumnName = "id")
+    @JoinColumn(name = "id_profesional", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private PypAdmProgramas idPrograma;
-    @JoinColumn(name = "id_paciente", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private InfoPaciente idPaciente;
+    private CmProfesionales idProfesional;
 
-    public PypAdmAgend() {
+    public PypAdmControlProfesionales() {
     }
 
-    public PypAdmAgend(Integer id) {
+    public PypAdmControlProfesionales(Integer id) {
         this.id = id;
     }
 
@@ -72,20 +69,20 @@ public class PypAdmAgend implements Serializable {
         this.id = id;
     }
 
-    public Date getFecha() {
-        return fecha;
+    public Date getFechaInicio() {
+        return fechaInicio;
     }
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public void setFechaInicio(Date fechaInicio) {
+        this.fechaInicio = fechaInicio;
     }
 
-    public Date getHora() {
-        return hora;
+    public Date getFechaFin() {
+        return fechaFin;
     }
 
-    public void setHora(Date hora) {
-        this.hora = hora;
+    public void setFechaFin(Date fechaFin) {
+        this.fechaFin = fechaFin;
     }
 
     public Character getEstado() {
@@ -104,20 +101,12 @@ public class PypAdmAgend implements Serializable {
         this.pypAdmAsistConList = pypAdmAsistConList;
     }
 
-    public PypAdmProgramas getIdPrograma() {
-        return idPrograma;
+    public CmProfesionales getIdProfesional() {
+        return idProfesional;
     }
 
-    public void setIdPrograma(PypAdmProgramas idPrograma) {
-        this.idPrograma = idPrograma;
-    }
-
-    public InfoPaciente getIdPaciente() {
-        return idPaciente;
-    }
-
-    public void setIdPaciente(InfoPaciente idPaciente) {
-        this.idPaciente = idPaciente;
+    public void setIdProfesional(CmProfesionales idProfesional) {
+        this.idProfesional = idProfesional;
     }
 
     @Override
@@ -130,10 +119,10 @@ public class PypAdmAgend implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof PypAdmAgend)) {
+        if (!(object instanceof PypAdmControlProfesionales)) {
             return false;
         }
-        PypAdmAgend other = (PypAdmAgend) object;
+        PypAdmControlProfesionales other = (PypAdmControlProfesionales) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -142,7 +131,7 @@ public class PypAdmAgend implements Serializable {
 
     @Override
     public String toString() {
-        return "entidades.PypAdmAgend[ id=" + id + " ]";
+        return "entidades.PypAdmControlProfesionales[ id=" + id + " ]";
     }
 
 }
