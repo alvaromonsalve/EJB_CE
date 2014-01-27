@@ -16,10 +16,4 @@
     <class>entity.AccessRoles</class>
     <class>entity.AccessConfigUser</class>
   </persistence-unit>
-  <properties>
-    <property name="javax.persistence.jdbc.url" value="jdbc:mysql://192.168.1.102:3306/database?zeroDateTimeBehavior=convertToNull"/>
-    <property name="javax.persistence.jdbc.password" value="9RLH5QEwQ4dF"/>
-    <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-    <property name="javax.persistence.jdbc.user" value="root"/>
-  </properties>
 </persistence>
