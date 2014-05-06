@@ -200,7 +200,7 @@ public class PypAdmAsistConJpaController implements Serializable {
     public List<PypAdmAsistCon> listPypAdmAsistCon(int cp){
         EntityManager em = getEntityManager();
         try {
-            return em.createQuery("SELECT p FROM PypAdmAsistCon p WHERE p.estado = '1' AND p.idControlPro.idProfesional.id = :cp" )
+            return em.createQuery("SELECT p FROM PypAdmAsistCon p WHERE (p.estado = '1' OR p.estado = '3') AND p.idControlPro.idProfesional.id = :cp" )
                     .setParameter("cp", cp)
                     .setHint("javax.persistence.cache.storeMode", "REFRESH")
                     .getResultList();
@@ -212,7 +212,18 @@ public class PypAdmAsistConJpaController implements Serializable {
     public List<PypAdmAsistCon> listPypAdmAsistCon(){
         EntityManager em = getEntityManager();
         try {
-            return em.createQuery("SELECT p FROM PypAdmAsistCon p WHERE p.estado = '1'" )
+            return em.createQuery("SELECT p FROM PypAdmAsistCon p WHERE p.estado = '1' OR p.estado = '3'" )
+                    .setHint("javax.persistence.cache.storeMode", "REFRESH")
+                    .getResultList();
+        } finally {
+            em.close();
+        }
+    }
+    
+    public List<PypAdmAsistCon> listPypAdmAsistConAten(){
+        EntityManager em = getEntityManager();
+        try {
+            return em.createQuery("SELECT p FROM PypAdmAsistCon p WHERE p.estado = '3'" )
                     .setHint("javax.persistence.cache.storeMode", "REFRESH")
                     .getResultList();
         } finally {
