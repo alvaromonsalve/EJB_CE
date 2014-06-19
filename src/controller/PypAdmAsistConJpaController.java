@@ -3,22 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package controller;
 
 import controller.exceptions.NonexistentEntityException;
 import entity.CmProfesionales;
-import java.io.Serializable;
-import javax.persistence.Query;
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import entity.PypAdmControlProfesionales;
 import entity.PypAdmAgend;
 import entity.PypAdmAsistCon;
+import entity.PypAdmControlProfesionales;
+import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 /**
  *
@@ -195,12 +195,12 @@ public class PypAdmAsistConJpaController implements Serializable {
             em.close();
         }
     }
-    
+
     //codigo no Auto-Generado
-    public List<PypAdmAsistCon> listPypAdmAsistCon(int cp){
+    public List<PypAdmAsistCon> listPypAdmAsistCon(int cp) {
         EntityManager em = getEntityManager();
         try {
-            return em.createQuery("SELECT p FROM PypAdmAsistCon p WHERE (p.estado = '1' OR p.estado = '3') AND p.idControlPro.idProfesional.id = :cp" )
+            return em.createQuery("SELECT p FROM PypAdmAsistCon p WHERE (p.estado = '1' OR p.estado = '3') AND p.idControlPro.idProfesional.id = :cp")
                     .setParameter("cp", cp)
                     .setHint("javax.persistence.cache.storeMode", "REFRESH")
                     .getResultList();
@@ -208,22 +208,11 @@ public class PypAdmAsistConJpaController implements Serializable {
             em.close();
         }
     }
-    
-    public List<PypAdmAsistCon> listPypAdmAsistCon(){
+
+    public List<PypAdmAsistCon> listPypAdmAsistCon() {
         EntityManager em = getEntityManager();
         try {
-            return em.createQuery("SELECT p FROM PypAdmAsistCon p WHERE p.estado = '1' OR p.estado = '3'" )
-                    .setHint("javax.persistence.cache.storeMode", "REFRESH")
-                    .getResultList();
-        } finally {
-            em.close();
-        }
-    }
-    
-    public List<PypAdmAsistCon> listPypAdmAsistConAten(){
-        EntityManager em = getEntityManager();
-        try {
-            return em.createQuery("SELECT p FROM PypAdmAsistCon p WHERE p.estado = '3'" )
+            return em.createQuery("SELECT p FROM PypAdmAsistCon p WHERE p.estado = '1' OR p.estado = '3'")
                     .setHint("javax.persistence.cache.storeMode", "REFRESH")
                     .getResultList();
         } finally {
@@ -231,4 +220,40 @@ public class PypAdmAsistConJpaController implements Serializable {
         }
     }
 
+    public List<PypAdmAsistCon> listPypAdmAsistConAten() {
+        EntityManager em = getEntityManager();
+        try {
+            return em.createQuery("SELECT p FROM PypAdmAsistCon p WHERE p.estado = '3'")
+                    .setHint("javax.persistence.cache.storeMode", "REFRESH")
+                    .getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<PypAdmAsistCon> listPypAdmAsistConadmin(Integer id, Date fechaini, Date fechafin) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.createQuery("SELECT p FROM PypAdmAsistCon p WHERE p.estado = '2' AND p.idAgend.idPrograma.id = :de  AND p.fecha BETWEEN :fechainicio AND :fechafin")
+                    //                    return em.createQuery("SELECT p FROM PypAdmAsistCon p WHERE p.estado = '2'  and p.idAgend.idPrograma.id = " + id + "")
+                    .setHint("javax.persistence.cache.storeMode", "REFRESH")
+                    .setParameter("de", id)
+                    .setParameter("fechainicio", fechaini)
+                    .setParameter("fechafin", fechafin)
+                    .getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<PypAdmAsistCon> listPypAdmAsistConadminp(String id) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.createQuery("SELECT p FROM PypAdmAsistCon p WHERE p.estado = '2'  and p.idAgend.idPaciente.numDoc = '" + id + "'")
+                    .setHint("javax.persistence.cache.storeMode", "REFRESH")
+                    .getResultList();
+        } finally {
+            em.close();
+        }
+    }
 }
