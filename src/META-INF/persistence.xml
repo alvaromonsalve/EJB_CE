@@ -15,5 +15,6 @@
     <class>entity.CmProfesionales</class>
     <class>entity.AccessRoles</class>
     <class>entity.AccessConfigUser</class>
+    <class>entity.StaticCie10</class>
   </persistence-unit>
 </persistence>

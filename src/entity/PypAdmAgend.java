@@ -34,6 +34,9 @@ import javax.persistence.TemporalType;
 @NamedQueries({
     @NamedQuery(name = "PypAdmAgend.findAll", query = "SELECT p FROM PypAdmAgend p")})
 public class PypAdmAgend implements Serializable {
+    @Basic(optional = false)
+    @Column(name = "escolaridad")
+    private short escolaridad;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -143,6 +146,14 @@ public class PypAdmAgend implements Serializable {
     @Override
     public String toString() {
         return "entidades.PypAdmAgend[ id=" + id + " ]";
+    }
+
+    public short getEscolaridad() {
+        return escolaridad;
+    }
+
+    public void setEscolaridad(short escolaridad) {
+        this.escolaridad = escolaridad;
     }
 
 }
